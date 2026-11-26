@@ -1,13 +1,8 @@
 #include <stdio.h>
 
 int main() {
-    int year, month, day, i;
-    int totalDays = 0, startDay;
-
-    
+    int year, month, day, d;
     int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-    
-    
     char *months[] = {
         "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
@@ -16,36 +11,28 @@ int main() {
     printf("Enter year: ");
     scanf("%d", &year);
 
-    
+   
     if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
-        daysInMonth[1] = 29; // Change February to 29 days
+        daysInMonth[1] = 29;
     }
-
-    
-    for (i = 1900; i < year; i++) {
-        if ((i % 4 == 0 && i % 100 != 0) || (i % 400 == 0)) {
-            totalDays += 366;
-        } else {
-            totalDays += 365;
-        }
-    }
-
-    
-    startDay = (totalDays + 1) % 7;
 
    
+    int y = year - 1;
+    int startDay = (y + y/4 - y/100 + y/400 + 1) % 7;
+
+    
     for (month = 0; month < 12; month++) {
-        printf("\n\n  ------------ %s %d ------------\n", months[month], year);
-        printf("  Sun  Mon  Tue  Wed  Thu  Fri  Sat\n");
+        printf("\n\n--- %s %d ---\n", months[month], year);
+        printf("Su Mo Tu We Th Fr Sa\n");
 
         
-        for (i = 0; i < startDay; i++) {
-            printf("     ");
+        for (d = 0; d < startDay; d++) {
+            printf("   ");
         }
 
         
         for (day = 1; day <= daysInMonth[month]; day++) {
-            printf("%5d", day);
+            printf("%2d ", day);
             startDay++;
 
             
@@ -55,7 +42,7 @@ int main() {
             }
         }
     }
-
     printf("\n");
+
     return 0;
 }
